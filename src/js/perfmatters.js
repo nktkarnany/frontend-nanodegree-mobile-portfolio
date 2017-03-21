@@ -7,6 +7,11 @@ function logCRP() {
     complete = t.domComplete - t.domLoading;
   var stats = document.getElementById("crp-stats");
   stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
+
+    var link = document.createElement('link');
+    link.rel = "stylesheet";
+    link.href = "//fonts.googleapis.com/css?family=Open+Sans:400,700";
+    document.querySelector("head").appendChild(link);
 }
 
 window.addEventListener("load", function(event) {
