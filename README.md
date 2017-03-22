@@ -1,55 +1,53 @@
-## Website Performance Optimization portfolio project
+## Website Performance Optimization nanodegree project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+Here is the link to the website whose source code is in this repository. [Optimized Link](https://nktkarnany.github.io/frontend-nanodegree-mobile-portfolio/).
+
+Link to the google page speed insights for the index.html page - [Score - 93 & 95](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fnktkarnany.github.io%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=mobile)
+
+Link to the pizza.html with 60 FPS speed when scrolling - [Scroll To Feel It](https://nktkarnany.github.io/frontend-nanodegree-mobile-portfolio/views/pizza.html)
 
 To get started, check out the repository and inspect the code.
 
 ### Getting started
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+####Steps to run this application
 
-Some useful tips to help you get started:
+1. First clone or download this repository into your local machine.
+2. This website uses gulp task runner to minify css, js and images for optimization.
+3. You must have got a _package.json_ file with the source code.
+4. Run `npm install` in cmd to download and install node modules.
+5. After successfull installation of npm you can start making changes in the css and js files of your src folder.
+6. Any change to reflect in your website you'll have to run `gulp` from the cmd.
+7. This ensures that all the css and js files are minified and copied into the dist folder to which the website is refering to.
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+####Part 1: Optimized PageSpeed Insights score for index.html
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+1. Check out the repository.
+2. This repository is hosted by github pages.
+3. Link to this website is given above.
+4. Link to the page speed is also given as well.
+5. List of all changes from top to bottom of the index.html page.
+6. Media queries for the css file(print.css) which was render blocking the page load.
+7. Inlining all the css styles from the _style.css_ file so avoid one more network call to fetch the data.
+8. Using optimized images everywhere. Images were also minified using gulp.
+9. All the javascripts are moved just before closing of the `body` tag because no point downloading them before dom.
+10. All javascripts are made async to avoid render blocking because none of them are needed early.
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+####Part 2: Optimized Frames per Second in pizza.html
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
-  ```
+1. If we look at at line 493. function `updatePositions()`, we can see that - 
+* I am fetching the list of mover elements by class.
+* Calculating the scroll top outside loop.
+* Creating the phases array using Math.sin method outside the layout paint loop helps prevent FSL.
+* In the loop painting the layout I am using the translateX property which enables hardware acceleration.
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+2. In line 527. number of pizzas are reduced to 30 because 200 pizzas are not visible on the screen.
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+3. In _style.css_ files for the mover class will-change property is added to generate the elements in a seperate layer. This avoids painting overhead in the main layer.
 
-####Part 2: Optimize Frames per Second in pizza.html
-
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
-
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+4. For decreasing time to resize pizza to 0ms - 
+* Line 439. function `changePizzaSizes(size)`, I am not calculating the absolute width for the given size of the element.
+* Line 425. function `determineDx(size)`, has a switch statement which gives the width(in percent) according to the size passed.
+* Line 442. saving this percent width in the `newwidth` variable.
+* Line 444. Again getting the list of elements and saving them in the `pizzas` variable.
+* Then looping each element in `pizzas` variable and updating the `style.width` property with the `newwidth`.
