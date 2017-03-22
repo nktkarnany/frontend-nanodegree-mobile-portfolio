@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
-var responsive = require('gulp-responsive-images');
+var imagemin = require('gulp-imagemin');
 
 // Minify compiled CSS
 gulp.task('minify-css', function() {
@@ -21,17 +21,10 @@ gulp.task('minify-js', function() {
 });
 
 // Optimise Images
-gulp.task('optimise-img', function () {
-  return gulp.src(['views/images/*','src/img/*'])
-    .pipe(responsive({
-      'pizzeria.jpg': [{
-        width: 100
-      }],
-      '*.jpg': [{
-          width: 100
-      }]
-    }))
+gulp.task('minify-img', function () {
+  return gulp.src(['views/images/*.jpg','src/img/*.jpg'])
+    .pipe(imagemin())
     .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('default', ['minify-css', 'minify-js', 'optimise-img']);
+gulp.task('default', ['minify-css', 'minify-js', 'minify-img']);
