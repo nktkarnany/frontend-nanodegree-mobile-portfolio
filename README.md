@@ -1,8 +1,8 @@
 ## Website Performance Optimization nanodegree project
 
-Here is the link to the website whose source code is in this repository. [Optimized Link](https://nktkarnany.github.io/frontend-nanodegree-mobile-portfolio/).
+Here is the link to the website whose source code is in this repository. [Link to the Website](https://nktkarnany.github.io/frontend-nanodegree-mobile-portfolio/).
 
-Link to the google page speed insights for the index.html page - [Score - 93 & 95](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fnktkarnany.github.io%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=mobile)
+Link to the google page speed insights for the index.html page - [Check Out Page Speed Score](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fnktkarnany.github.io%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=mobile)
 
 Link to the pizza.html with 60 FPS speed when scrolling - [Scroll To Feel It](https://nktkarnany.github.io/frontend-nanodegree-mobile-portfolio/views/pizza.html)
 
@@ -10,7 +10,11 @@ To get started, check out the repository and inspect the code.
 
 ### Getting started
 
-####Steps to run this application
+#### Steps to run this application
+
+1. To Run the application locally open _index.html_ in your browser.
+
+#### Steps to build this application
 
 1. First clone or download this repository into your local machine.
 2. This website uses gulp task runner to minify css, js and images for optimization.
@@ -20,7 +24,7 @@ To get started, check out the repository and inspect the code.
 6. Any change to reflect in your website you'll have to run `gulp` from the cmd.
 7. This ensures that all the css and js files are minified and copied into the dist folder to which the website is refering to.
 
-####Part 1: Optimized PageSpeed Insights score for index.html
+#### Part 1: Optimized PageSpeed Insights score for index.html
 
 1. Check out the repository.
 2. This repository is hosted by github pages.
@@ -33,7 +37,7 @@ To get started, check out the repository and inspect the code.
 9. All the javascripts are moved just before closing of the `body` tag because no point downloading them before dom.
 10. All javascripts are made async to avoid render blocking because none of them are needed early.
 
-####Part 2: Optimized Frames per Second in pizza.html
+#### Part 2: Optimized Frames per Second in pizza.html
 
 1. If we look at at line 493. function `updatePositions()`, we can see that - 
 * I am fetching the list of mover elements by class.
