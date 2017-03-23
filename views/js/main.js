@@ -438,14 +438,14 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
 
-    var dx = determineDx(size);
-    var newwidth = (dx) + '%';
+    var dx = determineDx(size); // getting the percent width for the element according to the size in the slider
+    var newwidth = (dx) + '%'; // using relative width instead of absolute widths reduces script calculation
 
-    var pizzas = document.getElementsByClassName('randomPizzaContainer');
-    var len = pizzas.length;
+    var pizzas = document.getElementsByClassName('randomPizzaContainer'); // creating the list of elements outside the loop prevents FSL
+    var len = pizzas.length; // Calculating length only once instead calculating it in every iteration of the loop
 
     for (var i = 0; i < len; i++) {
-      pizzas[i].style.width = newwidth;
+      pizzas[i].style.width = newwidth; // setting the newWidth which is a percent value
     }
   }
 
@@ -461,8 +461,8 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -494,16 +494,17 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.getElementsByClassName('mover');
+  var items = document.getElementsByClassName('mover'); // fetching the list of mover elements by class is more efficient
 
-  var sTop = document.body.scrollTop / 1250;
+  var sTop = document.body.scrollTop / 1250; // calculating the scroll top outside loop
   var phases = new Array(5);
   for (var i = 0; i < 5; i++) {
-     phases[i] = Math.sin(sTop + i);
+     phases[i] = Math.sin(sTop + i); // Creating the phases array using Math.sin method outside the layout paint loop helps prevent FSL
   }
 
+  // Loop painting the layout
   for (var i = 0; i < items.length; i++) {
-    items[i].style.transform = 'translateX(' + parseInt(items[i].basicLeft + 100 * phases[i % 5]) + 'px' + ')';
+    items[i].style.transform = 'translateX(' + parseInt(100 * phases[i % 5]) + 'px' + ')';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -523,13 +524,15 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 30; i++) {
+  var rows = window.innerHeight / s;
+  var numPizzas = cols * rows;
+  for (var i = 0; i < numPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
+    elem.style.left = (i % cols) * s + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
